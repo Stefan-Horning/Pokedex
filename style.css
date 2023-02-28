@@ -3,7 +3,7 @@ body{
 }
 
 .d-none{
-    display: none;
+    display: none !important;
 }
 
 .pokemon-container{
@@ -34,6 +34,7 @@ h1{
     flex-wrap: wrap;
     overflow-y: scroll;
     display: flex;
+    
 }
 
 #pokemon{
@@ -68,4 +69,23 @@ h1{
 .pokemon-overview-div img:hover{
     transform: scale(1.5);
     cursor: pointer;
+}
+
+.pokemonView-div{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(1px);
+}
+
+.pokemon-view{
+    height: 600px;
+    width: 500px;
+    background-color: aqua;
 }

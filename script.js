@@ -3,6 +3,7 @@ let pokedex = [];
 
 async function init(){
     await first100Pokemon();
+    //await all898Pokemon();
 }
 
 async function first100Pokemon(){
@@ -13,10 +14,10 @@ async function first100Pokemon(){
         pokedex.push(currentAsJson);
         renderPokemon(i -1)
     }
-    await all898Pokemon();
+    
 }
 
-async function all898Pokemon(){
+/*async function all898Pokemon(){
     for(let i = 100; i<= 898; i++){
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let response = await fetch(url);
@@ -24,15 +25,21 @@ async function all898Pokemon(){
         pokedex.push(currentAsJson);
         renderPokemon(i -1)
     }
-}
+}*/
 
 function renderPokemon(i){
     let content = document.getElementById('allPokemon');
     content.innerHTML += /*html*/ `
         <div class="pokemon-overview-div">   
-            <img src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            <img onclick="pokemonView(${i + 1})" id="pokemon${i+1}" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
             <span>#${i + 1} ${pokedex[i]['name']}</span>
         </div>
         
     `;
 }
+
+function pokemonView(i){
+    let div = document.getElementById('pokemon-view-div');
+    let img = document.getElementById('pokemonImg');
+}
+
