@@ -11,6 +11,11 @@ body{
     width: 100%;
     background-image: url('img/pokemon-background.jpg');
     background-position: center;
+    overflow-x: hidden;
+}
+
+.pokemon-container::-webkit-scrollbar {
+    display: none !important;
 }
 
 .header{
@@ -87,5 +92,23 @@ h1{
 .pokemon-view{
     height: 600px;
     width: 500px;
-    background-color: aqua;
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+}
+
+.informations img{
+    height: 250px;
+    width: 250px;
+}
+
+.informations{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: -200px;
+}
+
+.pokemon-img{
+    display: flex;
+    justify-content: center;
 }

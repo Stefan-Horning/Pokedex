@@ -12,9 +12,8 @@ async function first100Pokemon(){
         let response = await fetch(url);
         currentAsJson = await response.json();
         pokedex.push(currentAsJson);
-        renderPokemon(i -1)
+        await renderPokemon(i -1);
     }
-    
 }
 
 /*async function all898Pokemon(){
@@ -31,7 +30,7 @@ function renderPokemon(i){
     let content = document.getElementById('allPokemon');
     content.innerHTML += /*html*/ `
         <div class="pokemon-overview-div">   
-            <img onclick="pokemonView(${i + 1})" id="pokemon${i+1}" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            <img onclick="pokemonView(${i})" id="pokemon${i+1}" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
             <span>#${i + 1} ${pokedex[i]['name']}</span>
         </div>
         
@@ -41,5 +40,10 @@ function renderPokemon(i){
 function pokemonView(i){
     let div = document.getElementById('pokemon-view-div');
     let img = document.getElementById('pokemonImg');
+    div.classList.remove('d-none');
+    img.src = `${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}`;
+    document.getElementById('details').innerHTML = `
+    
+    `;
 }
 
