@@ -112,3 +112,8 @@ h1{
     display: flex;
     justify-content: center;
 }
+
+.pokemon-background{
+    height: 50%;
+    border-radius: 30px;
+}
