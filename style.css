@@ -66,12 +66,12 @@ h1{
     padding: 18px;
 }
 
-.pokemon-overview-div img{
+.pokemon-overview-div-img{
     object-fit: cover;
-    transition: transform .2s;
+    transition: transform 225ms;
 }
 
-.pokemon-overview-div img:hover{
+.pokemon-overview-div-img:hover{
     transform: scale(1.5);
     cursor: pointer;
 }
@@ -115,5 +115,10 @@ h1{
 
 .pokemon-background{
     height: 50%;
-    border-radius: 30px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    background-image:url('img/pokemon-view-background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
 }

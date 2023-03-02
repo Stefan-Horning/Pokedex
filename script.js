@@ -14,6 +14,10 @@ async function first100Pokemon(){
         pokedex.push(currentAsJson);
         await renderPokemon(i -1);
     }
+    for(let i = 1; i < 100; i++){
+        document.getElementById(`pokemon${i+1}`).classList.add('pokemon-overview-div-img');
+    }
+    
 }
 
 /*async function all898Pokemon(){
@@ -30,7 +34,7 @@ function renderPokemon(i){
     let content = document.getElementById('allPokemon');
     content.innerHTML += /*html*/ `
         <div class="pokemon-overview-div">   
-            <img onclick="pokemonView(${i})" id="pokemon${i+1}" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            <img onclick="pokemonView(${i})" id="pokemon${i+1}" class="pokemon-overview-div-img" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
             <span>#${i + 1} ${pokedex[i]['name']}</span>
         </div>
         
@@ -45,69 +49,7 @@ function pokemonView(i){
     document.getElementById('details').innerHTML = `
     
     `;
-    backgroundColor(i)
 }
 
-function backgroundColor(i){
-   let type = pokedex[i]['types'][0]['type']['name'];
-   if(type == 'grass'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgreen';
-   }
-   if(type == 'electric'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'yellow';
-    }
-    if(type == 'fire'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'red';
-    }
-    if(type == 'water'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightblue';
-    }
-    if(type == 'bug'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'normal'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'flying'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'fighting'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'poison'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'ground'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'rock'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'psychic'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'ice'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'ghost'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'steel'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'dragon'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'dark'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
-    if(type == 'Fairy'){
-        document.getElementById('pokemon-background').style.backgroundColor = 'lightgray';
-    }
 
-    
-    
-   
-
-}
 
