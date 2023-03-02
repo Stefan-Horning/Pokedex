@@ -51,5 +51,12 @@ function pokemonView(i){
     `;
 }
 
+function doNotClose(event){
+    event.stopPropagation();
+}
+
+function closePopup(){
+    document.getElementById('pokemon-view-div').classList.add('d-none')
+}
 
 
