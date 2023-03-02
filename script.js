@@ -14,9 +14,7 @@ async function first100Pokemon(){
         pokedex.push(currentAsJson);
         await renderPokemon(i -1);
     }
-    for(let i = 1; i < 100; i++){
-        document.getElementById(`pokemon${i+1}`).classList.add('pokemon-overview-div-img');
-    }
+    
     
 }
 
