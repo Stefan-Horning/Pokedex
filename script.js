@@ -1,34 +1,41 @@
 let currentAsJson;
 let pokedex = [];
+let effects;
+
 
 async function init(){
     await first100Pokemon();
-    //await all898Pokemon();
 }
 
 async function first100Pokemon(){
-    for(let i = 1; i < 100; i++){
+    for(let i = 1; i <= 100; i++){
         let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
         let response = await fetch(url);
         currentAsJson = await response.json();
         pokedex.push(currentAsJson);
         await renderPokemon(i -1);
     }
-    for(let i = 1; i < 100; i++){
+    for(let i = 1; i <= 100; i++){
         document.getElementById(`pokemon${i}`).classList.add('hover-effect');
     }
-    
 }
 
-/*async function all898Pokemon(){
-    for(let i = 100; i<= 898; i++){
-        let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-        let response = await fetch(url);
-        currentAsJson = await response.json();
-        pokedex.push(currentAsJson);
-        renderPokemon(i -1)
+async function more100Pokemon(){
+    if(pokedex.length == 898){
+        document.getElementById('button').classList.add('d-none')
+    }else{
+        for(let i = 1; i < pokedex.length; i++){
+            document.getElementById(`pokemon${i}`).classList.add('hover-effect');
+        }
+        for(let i = pokedex.length; i <= pokedex.length +100 ; i++){
+            let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+            let response = await fetch(url);
+            currentAsJson = await response.json();
+            pokedex.push(currentAsJson);
+            await renderPokemon(i -1);
+        }
     }
-}*/
+}
 
 function renderPokemon(i){
     let content = document.getElementById('allPokemon');
@@ -39,6 +46,8 @@ function renderPokemon(i){
         </div>
         
     `;
+
+    getEffect()
 }
 
 function pokemonView(i){
@@ -91,18 +100,25 @@ function closePopup(){
     document.getElementById('pokemon-view-div').classList.add('d-none')
 }
 
-const hiddenElements = document.querySelectorAll(".pokemon-overview-div-img");
 
-const observer = new IntersectionObserver((entries) =>{
-    entries.forEach((entry) => {
-        console.log(entry)
-        if(entry.isIntersecting){
-            entry.target.classList.add('show');
-        }else{
-            entry.target.classList.remove('show');
-        }
+function getEffect(){
+    effects = document.querySelectorAll(".pokemon-overview-div-img");
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            entry.target.classList.toggle("show", entry.isIntersecting)
+            
+        })
+    },{
+        threshold: 0.5,
     })
-})
+    
+    effects.forEach(effect => {
+        observer.observe(effect);
+        
+    }) 
 
 
-hiddenElements.forEach((el) => observer.observe(el));
+}
+
+
