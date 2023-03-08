@@ -1,4 +1,4 @@
-const pokemonEffects = document.querySelectorAll(".pokemon-overview-div-img");
+/*const pokemonEffects = document.querySelectorAll(".pokemon-overview-div-img");
 
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -10,4 +10,5 @@ const observer = new IntersectionObserver(entries => {
 
 pokemonEffects.forEach(pokemonEffect => {
     observer.observe(pokemonEffect)
-})
+})*/
+

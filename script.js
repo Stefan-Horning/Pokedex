@@ -34,11 +34,13 @@ function renderPokemon(i){
     let content = document.getElementById('allPokemon');
     content.innerHTML += /*html*/ `
         <div class="pokemon-overview-div">   
-            <img onclick="pokemonView(${i})" id="pokemon${i+1}" class="pokemon-overview-div-img" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            <img onclick="pokemonView(${i})" id="pokemon${i+1}" class="pokemon-overview-div-img hidden" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
             <span>#${i + 1} ${pokedex[i]['name']}</span>
         </div>
         
     `;
+
+    entries();
 }
 
 function pokemonView(i){
@@ -91,4 +93,18 @@ function closePopup(){
     document.getElementById('pokemon-view-div').classList.add('d-none')
 }
 
+const hiddenElements = document.querySelectorAll(".pokemon-overview-div-img");
 
+const observer = new IntersectionObserver((entries) =>{
+    entries.forEach((entry) => {
+        console.log(entry)
+        if(entry.isIntersecting){
+            entry.target.classList.add('show');
+        }else{
+            entry.target.classList.remove('show');
+        }
+    })
+})
+
+
+hiddenElements.forEach((el) => observer.observe(el));

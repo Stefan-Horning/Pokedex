@@ -68,11 +68,14 @@ h1{
 
 .pokemon-overview-div-img{
     object-fit: cover;
-    transition: 225ms;
-    opacity: 0;
 }
 
-.pokemon-overview-div-img.show{
+.hidden{
+    opacity: 0;
+    transition: all 250ms;
+}
+
+.show{
     opacity: 1;
 }
 
