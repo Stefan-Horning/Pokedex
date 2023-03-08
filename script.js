@@ -39,8 +39,6 @@ function renderPokemon(i){
         </div>
         
     `;
-
-    entries();
 }
 
 function pokemonView(i){
