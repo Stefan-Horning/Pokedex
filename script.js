@@ -14,7 +14,9 @@ async function first100Pokemon(){
         pokedex.push(currentAsJson);
         await renderPokemon(i -1);
     }
-    
+    for(let i = 1; i < 100; i++){
+        document.getElementById(`pokemon${i}`).classList.add('hover-effect');
+    }
     
 }
 
@@ -44,11 +46,41 @@ function pokemonView(i){
     let img = document.getElementById('pokemonImg');
     div.classList.remove('d-none');
     img.src = `${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}`;
-    document.getElementById('details').innerHTML = `
-    <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-        <div class="bg-success progress-bar" style="width: 25%">25%</div>
+    document.getElementById('details').innerHTML = pokemonViewHTML(i);
+}
+
+function pokemonViewHTML(i){
+    return /*html*/ `
+    <div>
+        <span>Name:</span>
+        <span>${pokedex[i]['name']}</span>
     </div>
-    `;
+    <div>
+        <span>Type:</span>
+        <span>${pokedex[i]['types'][0]['type']['name']}</span>
+    </div>
+    <div>
+        <span>height:</span>
+        <span>${pokedex[i]['height']/ 10} M</span>
+    </div>
+    <div>
+        <span>weight</span>
+        <span>${pokedex[i]['weight']/10} Kg</span>
+    </div>
+    <div>
+        <span>Hp:</span>
+        <span>${pokedex[i]['stats'][0]['base_stat']} Hp</span>
+    </div>
+    <div>
+        <span>attack:</span>
+        <span>${pokedex[i]['stats'][1]['base_stat']} At</span>
+    </div>
+    <div>
+        <span>defense:</span>
+        <span>${pokedex[i]['stats'][2]['base_stat']} De</span>
+    </div>
+
+`;
 }
 
 function doNotClose(event){

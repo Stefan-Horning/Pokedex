@@ -68,13 +68,19 @@ h1{
 
 .pokemon-overview-div-img{
     object-fit: cover;
-    transition: transform 225ms;
+    transition: 225ms;
+    opacity: 0;
 }
 
-.pokemon-overview-div-img:hover{
+.pokemon-overview-div-img.show{
+    opacity: 1;
+}
+
+.hover-effect:hover{
     transform: scale(1.5);
     cursor: pointer;
 }
+
 
 .pokemonView-div{
     position: absolute;
@@ -105,7 +111,7 @@ h1{
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin-top: -200px;
+    margin-top: -210px;
 }
 
 .pokemon-img{
@@ -121,4 +127,20 @@ h1{
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100%;
+}
+
+.progress{
+    width: 90%;
+    margin-left: 20px;
+    margin-top: -10px;
+}
+
+.details div{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
 }
