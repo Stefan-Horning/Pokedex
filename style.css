@@ -27,6 +27,26 @@ body{
     background-color: rgba(0,0,0,0.2);
 }
 
+.input-div{
+    position: absolute;
+    top: 20px;
+    right: 150px;
+    font-family:  "Anton";
+}
+
+
+
+.input-div input{
+    width: 300px;
+    font-weight: 100;
+    font-size: 18px;
+}
+
+.input-div input::placeholder{
+    display: flex;
+    justify-content: center;
+}
+
 h1{
     letter-spacing: 5px;
     font-size: 38px;
@@ -39,6 +59,7 @@ h1{
     flex-wrap: wrap;
     overflow-y: scroll;
     display: flex;
+    overflow-x: hidden !important;
     
 }
 
