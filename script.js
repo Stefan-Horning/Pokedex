@@ -143,6 +143,7 @@ function getEffect(){
 
 function renderPokemonByName(i){
     let content = document.getElementById('allPokemon');
+    i = i - 1
     content.innerHTML += /*html*/ `
         <div class="pokemon-overview-div">   
             <img onclick="pokemonView(${i})" id="pokemon${i}"  class="pokemon-overview-div-img hidden" src="${PokedexSearch[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
@@ -166,16 +167,14 @@ function filterPokemon(){
     let search = document.getElementById('search').value;
     let content = document.getElementById('allPokemon');
     if(search.value == ''){
-        content.innerHTML = '';
-        pokedex = [];
-        firstPokemon();
+       
     }else{
         search = search.toLowerCase();
         content.innerHTML = '';
         for (let i = 1; i < AllNamePokemon.length; i++) {
             let Pokemon = AllNamePokemon[i];
             if(Pokemon.toLowerCase().includes(search)){
-                renderPokemonByName(i + 1);
+                renderPokemon(i);
             }
         }
     }
