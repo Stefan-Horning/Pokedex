@@ -4,6 +4,8 @@ let effects;
 let isLoading;
 let all_pokemon = [];
 let results;
+let PokedexSearch = [];
+let currentAsJsonSearch;
 
 async function init() {
     await firstPokemon();
@@ -25,9 +27,30 @@ function loadPokemonSearch() {
     }  
 }
 
-function find(name) {
-    results = all_pokemon.filter(p => p.name.toLowerCase().includes(name.toLowerCase()));
-    
+function find() {
+    let input = document.getElementById('search').value;
+    results;
+    setTimeout(() =>{
+        if(input != ''){
+            results = all_pokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input.toLowerCase()));
+            loadPokemonSearchDetails();
+        }else{
+            let content = document.getElementById('allPokemon');
+            content.innerHTML = '';
+            firstPokemon();
+        }
+    }, 1)
+}
+
+async function loadPokemonSearchDetails(){
+    let content = document.getElementById('allPokemon');
+    content.innerHTML = '';
+    for(i = 0; i < results.length; i++){
+       let url = results[i]['url'];
+       let response = await fetch(url)
+       currentAsJsonSearch = await response.json();
+       PokedexSearch.push(currentAsJsonSearch);
+    }
 }
 
 async function firstPokemon() {
@@ -178,15 +201,3 @@ setTimeout(() => {
     }
 }, 1);
 */
-
-function renderPokemonByName(i) {
-    let content = document.getElementById('allPokemon');
-    let img = PokedexSearch[i]['sprites']['other']['official-artwork']['front_shiny'];
-    content.innerHTML += /*html*/  ` 
-        <div class="pokemon-overview-div">   
-            <img onclick="pokemonView(${i})" id="pokemon${i + 1}"  class="pokemon-overview-div-img" src="${img}" alt="">
-            <span>#${i + 1} ${PokedexSearch[i]['name']}</span>
-        </div>
-        
-    `;
-}
