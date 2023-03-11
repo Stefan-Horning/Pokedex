@@ -17,7 +17,7 @@ async function init() {
 //-----------------------------------------------------//
 
 async function loadSearch(){
-    let url = 'https://pokeapi.co/api/v2/pokemon/?offset=20&limit=2000';
+    let url = 'https://pokeapi.co/api/v2/pokemon/?offset=20&limit=1010';
     let response = await fetch(url);
     results = await response.json();
     all_pokemon = (await (await fetch(url)).json()).results;
@@ -34,12 +34,15 @@ function loadPokemonSearch() {
 async function loadPokemonSearchDetails(){
     let content = document.getElementById('allPokemon');
     content.innerHTML = '';
-    for(i = 0; i < results.length; i++){
-       let url = results[i]['url'];
-       let response = await fetch(url)
-       currentAsJsonSearch = await response.json();
-       PokedexSearch.push(currentAsJsonSearch);
-       renderPokemon(i,PokedexSearch);
+    if(results != ''){
+        for(i = 0; i < results.length; i++){
+            let url = results[i]['url'];
+            let response = await fetch(url)
+            currentAsJsonSearch = await response.json();
+            PokedexSearch.push(currentAsJsonSearch);
+            let id = PokedexSearch[i]['id'];
+            renderPokemon(i,PokedexSearch, id);
+         }
     }
 }
 
@@ -51,14 +54,15 @@ async function firstPokemon() {
         let response = await fetch(url);
         currentAsJson = await response.json();
         pokedex.push(currentAsJson);
-        await renderPokemon(i - 1);
+        let id = pokedex[i - 1]['id'];
+        await renderPokemon(i - 1, pokedex, id);
     }
     hovereffect(firstAmount, lastAmount);
 }
 
 async function load20Pokemons() {
     let firstAmount = pokedex.length + 1;
-    let lastAmount = pokedex.length + 51;
+    let lastAmount = pokedex.length + 21;
     for (let i = firstAmount; i < lastAmount; i++) {
         if (pokedex.length == 1010) {
             console.log('all')
@@ -67,7 +71,8 @@ async function load20Pokemons() {
             let response = await fetch(url);
             currentAsJson = await response.json();
             pokedex.push(currentAsJson);
-            await renderPokemon(i - 1);
+            let id = pokedex[i - 1]['id'];
+            await renderPokemon(i - 1, pokedex, id);
         }
     }
     hovereffect(firstAmount, lastAmount);
@@ -77,12 +82,12 @@ async function load20Pokemons() {
 //-------------------- render Pokemon -----------------//
 //-----------------------------------------------------//
 
-function renderPokemon(i,Array) {
+function renderPokemon(i,Array,id) {
     let content = document.getElementById('allPokemon');
     content.innerHTML += /*html*/ `
         <div class="pokemon-overview-div">   
-            <img onclick="pokemonView(${i})" id="pokemon${i}"  class="pokemon-overview-div-img hidden" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-            <span>#${i + 1} ${pokedex[i]['name']}</span>
+            <img onclick="pokemonView(${id - 1})" id="pokemon${id}"  class="pokemon-overview-div-img hidden" src="${Array[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            <span>#${id} ${Array[i]['name']}</span>
         </div>
         
     `;
@@ -106,7 +111,7 @@ async function onTheBottom() {
     if (obj.scrollTop === (obj.scrollHeight - obj.offsetHeight) && !isLoading) {
         isLoading = true;
         await load20Pokemons()
-        isLoading = false
+        isLoading = false;
     };
 }
 
@@ -146,18 +151,22 @@ function getEffect() {
 //-----------------------------------------------------//
 
 function find() {
-    let input = document.getElementById('search').value;
-    results;
-    setTimeout(() =>{
-        if(input != ''){
-            results = all_pokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input.toLowerCase()));
-            loadPokemonSearchDetails();
-        }else{
-            let content = document.getElementById('allPokemon');
-            content.innerHTML = '';
-            firstPokemon();
-        }
-    }, 1)
+    if(results != ''){
+        let input = document.getElementById('search').value;
+        results;
+        PokedexSearch = [];
+    if(input != ''){
+        results = all_pokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input.toLowerCase()));
+        
+        loadPokemonSearchDetails();
+        
+    }else{
+        let content = document.getElementById('allPokemon');
+        content.innerHTML = '';
+        firstPokemon();
+    }
+    }
+    
 }
 
 //-----------------------------------------------------//
