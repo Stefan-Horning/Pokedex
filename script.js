@@ -12,6 +12,10 @@ async function init() {
     await loadSearch();
 }
 
+//-----------------------------------------------------//
+//-------------------- API include --------------------//
+//-----------------------------------------------------//
+
 async function loadSearch(){
     let url = 'https://pokeapi.co/api/v2/pokemon/?offset=20&limit=2000';
     let response = await fetch(url);
@@ -27,21 +31,6 @@ function loadPokemonSearch() {
     }  
 }
 
-function find() {
-    let input = document.getElementById('search').value;
-    results;
-    setTimeout(() =>{
-        if(input != ''){
-            results = all_pokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input.toLowerCase()));
-            loadPokemonSearchDetails();
-        }else{
-            let content = document.getElementById('allPokemon');
-            content.innerHTML = '';
-            firstPokemon();
-        }
-    }, 1)
-}
-
 async function loadPokemonSearchDetails(){
     let content = document.getElementById('allPokemon');
     content.innerHTML = '';
@@ -50,6 +39,7 @@ async function loadPokemonSearchDetails(){
        let response = await fetch(url)
        currentAsJsonSearch = await response.json();
        PokedexSearch.push(currentAsJsonSearch);
+       renderPokemon(i,PokedexSearch);
     }
 }
 
@@ -64,12 +54,6 @@ async function firstPokemon() {
         await renderPokemon(i - 1);
     }
     hovereffect(firstAmount, lastAmount);
-}
-
-function hovereffect(firstAmount, lastAmount) {
-    for (let i = firstAmount; i < lastAmount - 1; i++) {
-        document.getElementById(`pokemon${i}`).classList.add('hover-effect');
-    }
 }
 
 async function load20Pokemons() {
@@ -89,7 +73,11 @@ async function load20Pokemons() {
     hovereffect(firstAmount, lastAmount);
 }
 
-function renderPokemon(i) {
+//-----------------------------------------------------//
+//-------------------- render Pokemon -----------------//
+//-----------------------------------------------------//
+
+function renderPokemon(i,Array) {
     let content = document.getElementById('allPokemon');
     content.innerHTML += /*html*/ `
         <div class="pokemon-overview-div">   
@@ -108,6 +96,73 @@ function pokemonView(i) {
     img.src = `${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}`;
     document.getElementById('details').innerHTML = pokemonViewHTML(i);
 }
+
+//-----------------------------------------------------//
+//--------------- Effects and Monitoring  -------------//
+//-----------------------------------------------------//
+
+async function onTheBottom() {
+    let obj = document.getElementById('allPokemon');
+    if (obj.scrollTop === (obj.scrollHeight - obj.offsetHeight) && !isLoading) {
+        isLoading = true;
+        await load20Pokemons()
+        isLoading = false
+    };
+}
+
+function hovereffect(firstAmount, lastAmount) {
+    for (let i = firstAmount; i < lastAmount - 1; i++) {
+        document.getElementById(`pokemon${i}`).classList.add('hover-effect');
+    }
+}
+
+function doNotClose(event) {
+    event.stopPropagation();
+}
+
+function closePopup() {
+    document.getElementById('pokemon-view-div').classList.add('d-none')
+}
+
+function getEffect() {
+    effects = document.querySelectorAll(".pokemon-overview-div-img");
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            entry.target.classList.toggle("show", entry.isIntersecting)
+
+        })
+    }, {
+        threshold: 0.5,
+    })
+
+    effects.forEach(effect => {
+        observer.observe(effect);
+
+    })
+}
+
+//-----------------------------------------------------//
+//------------------- Search Function -----------------//
+//-----------------------------------------------------//
+
+function find() {
+    let input = document.getElementById('search').value;
+    results;
+    setTimeout(() =>{
+        if(input != ''){
+            results = all_pokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input.toLowerCase()));
+            loadPokemonSearchDetails();
+        }else{
+            let content = document.getElementById('allPokemon');
+            content.innerHTML = '';
+            firstPokemon();
+        }
+    }, 1)
+}
+
+//-----------------------------------------------------//
+//----------------------- HTML ------------------------//
+//-----------------------------------------------------//
 
 function pokemonViewHTML(i) {
     return /*html*/ `
@@ -142,62 +197,3 @@ function pokemonViewHTML(i) {
 
 `;
 }
-
-function doNotClose(event) {
-    event.stopPropagation();
-}
-
-function closePopup() {
-    document.getElementById('pokemon-view-div').classList.add('d-none')
-}
-
-function getEffect() {
-    effects = document.querySelectorAll(".pokemon-overview-div-img");
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            entry.target.classList.toggle("show", entry.isIntersecting)
-
-        })
-    }, {
-        threshold: 0.5,
-    })
-
-    effects.forEach(effect => {
-        observer.observe(effect);
-
-    })
-}
-
-async function onTheBottom() {
-    let obj = document.getElementById('allPokemon');
-    if (obj.scrollTop === (obj.scrollHeight - obj.offsetHeight) && !isLoading) {
-        isLoading = true;
-        await load20Pokemons()
-        isLoading = false
-    };
-}
-
-
-
-
-/*
-setTimeout(() => {
-    let search = document.getElementById('search').value;
-    let content = document.getElementById('allPokemon');
-    if (search !== '') {
-        search = search.toLowerCase();
-        content.innerHTML = '';
-        for (let i = 1; i < AllNamePokemon.length; i++) {
-            let Pokemon = AllNamePokemon[i];
-            if (Pokemon.toLowerCase().includes(search)) {
-                renderPokemonByName(i);
-            }
-        }
-    }else{
-        content.innerHTML = '';
-        currentAsJson = '';
-        pokedex = [];
-        firstPokemon();
-    }
-}, 1);
-*/
