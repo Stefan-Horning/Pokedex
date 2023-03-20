@@ -24,7 +24,9 @@
             </div>
             <div class="informations" id="pokemonInfos">
                 <div class="pokemon-img">
+                    <img id="lastPokemon" src="" alt="">
                     <img id="pokemonImg" alt="">
+                    <img id="nextPokemon" src="" alt="">
                 </div>
                 <div class="details" id="details">
                 </div>
@@ -35,7 +37,7 @@
         <div class="header">
             <h1>Pokédex</h1>
             <div class="input-div">
-                <input id="search" type="text" placeholder="Search" onkeydown="filterPokemon()">
+                <input id="search" type="text" placeholder="Search" onkeyup="find()">
             </div>
         </div>
         <div id="allPokemon" class="all-pokemon" onscroll="onTheBottom()">  

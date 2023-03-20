@@ -6,6 +6,7 @@ let all_pokemon = [];
 let results;
 let PokedexSearch = [];
 let currentAsJsonSearch;
+let idForSearch = [];
 
 async function init() {
     await firstPokemon();
@@ -43,7 +44,8 @@ async function loadPokemonSearchDetails(){
                 currentAsJsonSearch = await response.json();
                 PokedexSearch.push(currentAsJsonSearch);
                 let id = await PokedexSearch[i]['id'];
-                renderPokemon(i,PokedexSearch, id);
+                await renderPokemon(i,PokedexSearch, id);
+                idForSearch.push(id);
             }
          }
     }
@@ -99,9 +101,8 @@ function renderPokemon(i,Array,id) {
 
 function pokemonView(i) {
     let div = document.getElementById('pokemon-view-div');
-    let img = document.getElementById('pokemonImg');
+    loadImgHTML(i);
     div.classList.remove('d-none');
-    img.src = `${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}`;
     document.getElementById('details').innerHTML = pokemonViewHTML(i);
 }
 
@@ -121,6 +122,13 @@ async function onTheBottom() {
 function hovereffect(firstAmount, lastAmount) {
     for (let i = firstAmount; i < lastAmount - 1; i++) {
         document.getElementById(`pokemon${i}`).classList.add('hover-effect');
+    }
+}
+function hovereffectForSearch(){
+    
+    for(let i = 0; i < idForSearch.length; i++){
+        let id = idForSearch[i];
+        document.getElementById(`pokemon${id}`).classList.add('hover-effect');
     }
 }
 
@@ -149,32 +157,67 @@ function getEffect() {
     })
 }
 
+function checkInputField(){
+    let input = document.getElementById('search');
+    if(!isSearching){
+        input.disabled = false;
+    }else{
+        input.disabled = true;
+    }
+}
+
 //-----------------------------------------------------//
 //------------------- Search Function -----------------//
 //-----------------------------------------------------//
-
-function find() {
-    if(results != ''){
-        let input = document.getElementById('search').value;
-        results;
-        PokedexSearch = [];
-    if(input != ''){
-        results = all_pokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input.toLowerCase()));
-        
-        loadPokemonSearchDetails();
-        
-    }else{
-        let content = document.getElementById('allPokemon');
-        content.innerHTML = '';
-        firstPokemon();
-    }
-    }
-    
+let isSearching = false;
+async function find() {
+    if(!isSearching){
+        isSearching = true;
+        checkInputField()
+        if(results != ''){
+            let input = document.getElementById('search').value;
+            results;
+            PokedexSearch = [];
+        if(input != ''){
+            results = all_pokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input.toLowerCase()));
+            await loadPokemonSearchDetails();
+            await hovereffectForSearch();
+            idForSearch = [];
+        }else{
+            let content = document.getElementById('allPokemon');
+            content.innerHTML = '';
+            await firstPokemon();
+        }
+        }
+        isSearching = false;
+        checkInputField();
+    }    
 }
 
 //-----------------------------------------------------//
 //----------------------- HTML ------------------------//
 //-----------------------------------------------------//
+
+function loadImgHTML(i){
+    let img = document.getElementById('pokemonImg');
+    let lastPokemon = document.getElementById('lastPokemon');
+    let nextPokemon = document.getElementById('nextPokemon');
+    if(i == 0){
+        lastPokemon.classList.add('d-none');
+        img.src = `${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}`;
+        nextPokemon.src = `${pokedex[i + 1]['sprites']['other']['official-artwork']['front_shiny']}`;
+    }else{
+        if(i == pokedex.length){
+            nextPokemon.classList.add('d-none');
+            lastPokemon.src = `${pokedex[i - 1]['sprites']['other']['official-artwork']['front_shiny']}`;
+            img.src = `${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}`;
+        }else{
+            lastPokemon.src = `${pokedex[i - 1]['sprites']['other']['official-artwork']['front_shiny']}`;
+            img.src = `${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}`;
+            nextPokemon.src = `${pokedex[i + 1]['sprites']['other']['official-artwork']['front_shiny']}`;
+        } 
+    }
+}
 
 function pokemonViewHTML(i) {
     return /*html*/ `
