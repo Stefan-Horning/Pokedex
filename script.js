@@ -89,19 +89,28 @@ async function load20Pokemons() {
 
 function renderPokemon(i,Array,id) {
     let content = document.getElementById('allPokemon');
-    content.innerHTML += /*html*/ `
+    if(Array != PokedexSearch){
+        content.innerHTML += /*html*/ `
         <div class="pokemon-overview-div">   
-            <img onclick="pokemonView(${id - 1})" id="pokemon${id}"  class="pokemon-overview-div-img hidden" src="${Array[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            <img onclick="pokemonView(${id - 1}, 'pokedex')" id="pokemon${id}"  class="pokemon-overview-div-img hidden" src="${Array[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
             <span>#${id} ${Array[i]['name']}</span>
         </div>
-        
     `;
+    }else{
+        content.innerHTML += /*html*/ `
+        <div class="pokemon-overview-div">   
+            <img onclick="pokemonViewSearch(${id - 1}, 'PokedexSearch')" id="pokemon${id}"  class="pokemon-overview-div-img hidden" src="${Array[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            <span>#${id} ${Array[i]['name']}</span>
+        </div>
+    `;
+    }
     getEffect()
 }
 
-function pokemonView(i) {
+function pokemonView(i, Array) {
     let div = document.getElementById('pokemon-view-div');
-    loadImgHTML(i);
+    let divImg = document.getElementById('PokemoonImgView');
+    divImg = loadImgHTML(i,Array);
     div.classList.remove('d-none');
     document.getElementById('details').innerHTML = pokemonViewHTML(i);
 }
@@ -198,26 +207,61 @@ async function find() {
 //----------------------- HTML ------------------------//
 //-----------------------------------------------------//
 
-function loadImgHTML(i){
-    let img = document.getElementById('pokemonImg');
-    let lastPokemon = document.getElementById('lastPokemon');
-    let nextPokemon = document.getElementById('nextPokemon');
-    if(i == 0){
-        lastPokemon.classList.add('d-none');
-        img.src = `${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}`;
-        nextPokemon.src = `${pokedex[i + 1]['sprites']['other']['official-artwork']['front_shiny']}`;
-    }else{
-        if(i == pokedex.length){
-            nextPokemon.classList.add('d-none');
-            lastPokemon.src = `${pokedex[i - 1]['sprites']['other']['official-artwork']['front_shiny']}`;
-            img.src = `${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}`;
+function loadImgHTML(i, Array){
+    if(Array != PokedexSearch){
+        let img = pokedex[i]['sprites']['other']['official-artwork']['front_shiny'];
+        let lastPokemon = pokedex[i - 1]['sprites']['other']['official-artwork']['front_shiny'];
+        let nextPokemon = pokedex[i + 1]['sprites']['other']['official-artwork']['front_shiny'];
+        if(i == 0){
+            return /*html*/ `
+                <img id="pokemonImg" src="${img}" alt="">
+                <img id="nextPokemon" src="${nextPokemon}" alt="">
+                `
         }else{
-            lastPokemon.src = `${pokedex[i - 1]['sprites']['other']['official-artwork']['front_shiny']}`;
-            img.src = `${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}`;
-            nextPokemon.src = `${pokedex[i + 1]['sprites']['other']['official-artwork']['front_shiny']}`;
-        } 
+            if(i == pokedex.length){
+                return /*html*/ `
+                    <img id="lastPokemon" src="${lastPokemon}" alt="">
+                    <img id="pokemonImg" src="${img}" alt="">
+                `
+            }else{
+                return /*html*/ `
+                <img id="lastPokemon" src="${lastPokemon}" alt="">
+                <img id="pokemonImg" src="${img}" alt="">
+                <img id="nextPokemon" src="${nextPokemon}" alt="">
+                `
+            } 
+        }
+    }else{
+        let img = PokedexSearch[i]['sprites']['other']['official-artwork']['front_shiny'];
+        let lastPokemon = PokedexSearch[i - 1]['sprites']['other']['official-artwork']['front_shiny'];
+        let nextPokemon = PokedexSearch[i + 1]['sprites']['other']['official-artwork']['front_shiny'];
+        if(i == 0){
+            return /*html*/ `
+                <img id="pokemonImg" src="${img}" alt="">
+                <img id="nextPokemon" src="${nextPokemon}" alt="">
+                `
+        }else{
+            if(i == pokedex.length){
+                return /*html*/ `
+                    <img id="lastPokemon" src="${lastPokemon}" alt="">
+                    <img id="pokemonImg" src="${img}" alt="">
+                `
+            }else{
+                return /*html*/ `
+                <img id="lastPokemon" src="${lastPokemon}" alt="">
+                <img id="pokemonImg" src="${img}" alt="">
+                <img id="nextPokemon" src="${nextPokemon}" alt="">
+                `
+            } 
+        }
     }
+    
+    
+    
+    
 }
+
+
 
 function pokemonViewHTML(i) {
     return /*html*/ `
