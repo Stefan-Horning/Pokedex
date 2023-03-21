@@ -21,7 +21,7 @@ body{
 .header{
     height: 70px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     font-family: 'Anton';
     background-color: rgba(0,0,0,0.2);
@@ -30,7 +30,7 @@ body{
 .input-div{
     position: absolute;
     top: 20px;
-    right: 150px;
+    right: 30px;
     font-family:  "Anton";
 }
 
@@ -51,6 +51,7 @@ h1{
     letter-spacing: 5px;
     font-size: 38px;
     color: black;
+    margin-left: 30px;
 }
 
 .all-pokemon{
@@ -77,7 +78,6 @@ h1{
     padding: 18px;
     margin-left: 20px;
     margin-bottom: 20px;
-    
 }
 
 .pokemon-overview-div span{
@@ -105,7 +105,6 @@ h1{
     transform: scale(1.5);
     cursor: pointer;
 }
-
 
 .pokemonView-div{
     position: absolute;
@@ -170,16 +169,16 @@ h1{
     margin-bottom: 10px;
 }
 
-.pokemon-View-last{
-    height: 200px !important;
-    width: 200px !important;
+.pokemon-View-last img{
+    height: 200px ;
+    width: 200px ;
     object-fit: cover;
     transition: all 250ms ease-in-out;
 }
 
-.pokemon-View-next {
-    height: 200px !important;
-    width: 200px !important;
+.pokemon-View-next img{
+    height: 200px ;
+    width: 200px ;
     object-fit: cover !important;
     transition: all 250ms ease-in-out;
 }
@@ -194,9 +193,9 @@ h1{
     scale: 1.1;
 }
 
-.pokemon-View-main{
-    height: 250px !important;
-    width: 250px !important;
+.pokemon-View-main img{
+    height: 250px ;
+    width: 250px ;
     object-fit: cover !important;
 }
 
@@ -211,4 +210,62 @@ h1{
 .button-search:hover{
     cursor: pointer;
     background-color: rgb(230, 229, 229);
+}
+
+@media (max-width: 775px){
+    .pokemon-view{
+        width: 400px;
+        height: 500px;
+    }
+
+    .pokemon-View-last img{
+        width: 100px ;
+        height: 100px ;
+    }
+
+    .pokemon-View-next img{
+        width: 100px ;
+        height: 100px ;
+    }
+
+    .pokemon-View-main img{
+        width: 200px ;
+        height: 200px ;
+    }
+
+    .informations{
+        margin-top: -200px;
+    }
+}
+
+@media (max-width: 600px){
+    .input-div input{
+        max-width: 150px;
+    }
+
+    
+}
+
+@media (max-width: 435px){
+    .button-search{
+        max-width: 60px;
+    }
+    .input-div input{
+        max-width: 110px;
+    }
+}
+
+@media (max-width: 380px){
+    .pokemon-View-main img{
+        width: 150px ;
+        height: 150px ;
+    }
+
+    .pokemon-view{
+        width: 300px;
+        height: 450px;
+    }
+    .input-div input{
+        max-width: 100px;
+    }
 }
