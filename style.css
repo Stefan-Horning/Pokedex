@@ -59,6 +59,7 @@ h1{
     flex-wrap: wrap;
     overflow-y: scroll;
     display: flex;
+    justify-content: center;
     overflow-x: hidden !important;
     
 }
@@ -167,4 +168,47 @@ h1{
     margin-top: 10px;
     border-bottom: 1px solid black;
     margin-bottom: 10px;
+}
+
+.pokemon-View-last{
+    height: 200px !important;
+    width: 200px !important;
+    object-fit: cover;
+    transition: all 250ms ease-in-out;
+}
+
+.pokemon-View-next {
+    height: 200px !important;
+    width: 200px !important;
+    object-fit: cover !important;
+    transition: all 250ms ease-in-out;
+}
+
+.pokemon-View-next:hover{
+    cursor: pointer;
+    scale: 1.2;
+}
+
+.pokemon-View-last:hover{
+    cursor: pointer;
+    scale: 1.1;
+}
+
+.pokemon-View-main{
+    height: 250px !important;
+    width: 250px !important;
+    object-fit: cover !important;
+}
+
+.button-search{
+    background-color: lightgray;
+    border: none;
+    height: 30px;
+    border: 1px solid lightgray;
+    width: 80px;
+}
+
+.button-search:hover{
+    cursor: pointer;
+    background-color: rgb(230, 229, 229);
 }
