@@ -212,85 +212,90 @@ async function find() {
 //----------------------- HTML ------------------------//
 //-----------------------------------------------------//
 
-function loadImgHTML(i, Array){
-    if(Array != 'PokedexSearch'){
-        if(i == 0){
+function loadIMGbyPokedexHTML(i){
+    if(i == 0){
+        return /*html*/ `
+        <div class="pokemon-View-main">
+            <img  id="pokemonImg" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+        </div>
+        <div class="pokemon-View-next">
+        <img onclick="pokemonView(${i + 1}, 'pokedex')" id="nextPokemon" src="${pokedex[i + 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+        </div>
+         `
+    }else{
+        if(i == pokedex.length - 1){
             return /*html*/ `
-            <div class="pokemon-View-main">
-                <img  id="pokemonImg" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-            </div>
-            <div class="pokemon-View-next">
-            <img onclick="pokemonView(${i + 1}, 'pokedex')" id="nextPokemon" src="${pokedex[i + 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-            </div>
-             `
-        }else{
-            if(i == pokedex.length - 1){
-                return /*html*/ `
-                    <div class="pokemon-View-last">
-                        <img onclick="pokemonView(${i - 1}, 'pokedex')"  id="lastPokemon" src="${pokedex[i - 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-                    </div>
-                    <div class="pokemon-View-main">
-                        <img  id="pokemonImg" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-                    </div>
-                    
-                `
-            }else{
-                return /*html*/ `
                 <div class="pokemon-View-last">
                     <img onclick="pokemonView(${i - 1}, 'pokedex')"  id="lastPokemon" src="${pokedex[i - 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
                 </div>
                 <div class="pokemon-View-main">
-                    <img onclick="pokemonView(${i}, 'pokedex')"  id="pokemonImg" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+                    <img  id="pokemonImg" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
                 </div>
-                <div class="pokemon-View-next">
-                    <img onclick="pokemonView(${i + 1}, 'pokedex')"  id="nextPokemon" src="${pokedex[i + 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-                </div>
-                `
-            } 
-        }
-    }else{
-        if(PokedexSearch.length == 1){
-            return /*html*/`
-            <div class="pokemon-View-main">
-                <img id="pokemonImg" src="${PokedexSearch[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-            </div>
-            
-            ` ; 
-        }
-        if(i == 0){
+            `
+        }else{
             return /*html*/ `
-                <div class="pokemon-View-main">
-                    <img  id="pokemonImg" src="${PokedexSearch[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-                </div>
-                <div class="pokemon-View-next">
-                    <img onclick="pokemonView(${i + 1}, 'PokedexSearch')"  id="nextPokemon" src="${PokedexSearch[i + 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-                </div>
-                `
-        }else{    
-            if(i == PokedexSearch.length - 1){
-                return /*html*/ `
-                    <div class="pokemon-View-last">
-                        <img onclick="pokemonView(${i - 1}, 'PokedexSearch')"  id="lastPokemon" src="${PokedexSearch[i - 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-                    </div>
-                    <div class="pokemon-View-main">
-                        <img  id="pokemonImg" src="${PokedexSearch[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-                    </div>
-                    
-                `
-            }else{
-                return /*html*/ `
+            <div class="pokemon-View-last">
+                <img onclick="pokemonView(${i - 1}, 'pokedex')"  id="lastPokemon" src="${pokedex[i - 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            </div>
+            <div class="pokemon-View-main">
+                <img onclick="pokemonView(${i}, 'pokedex')"  id="pokemonImg" src="${pokedex[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            </div>
+            <div class="pokemon-View-next">
+                <img onclick="pokemonView(${i + 1}, 'pokedex')"  id="nextPokemon" src="${pokedex[i + 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            </div>
+            `
+        } 
+    }
+}
+
+function loadIMGbyPokedexSearchHTML(i){
+    if(PokedexSearch.length == 1){
+        return /*html*/`
+        <div class="pokemon-View-main">
+            <img id="pokemonImg" src="${PokedexSearch[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+        </div>
+        ` ; 
+    }
+    if(i == 0){
+        return /*html*/ `
+            <div class="pokemon-View-main">
+                <img  id="pokemonImg" src="${PokedexSearch[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            </div>
+            <div class="pokemon-View-next">
+                <img onclick="pokemonView(${i + 1}, 'PokedexSearch')"  id="nextPokemon" src="${PokedexSearch[i + 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            </div>
+            `
+    }else{    
+        if(i == PokedexSearch.length - 1){
+            return /*html*/ `
                 <div class="pokemon-View-last">
                     <img onclick="pokemonView(${i - 1}, 'PokedexSearch')"  id="lastPokemon" src="${PokedexSearch[i - 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
                 </div>
                 <div class="pokemon-View-main">
                     <img  id="pokemonImg" src="${PokedexSearch[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
                 </div>
-                <div class="pokemon-View-next">
-                    <img onclick="pokemonView(${i + 1}, 'PokedexSearch')"  id="nextPokemon" src="${PokedexSearch[i + 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
-                </div>
-                `
-            } 
-        }
+            `
+        }else{
+            return /*html*/ `
+            <div class="pokemon-View-last">
+                <img onclick="pokemonView(${i - 1}, 'PokedexSearch')"  id="lastPokemon" src="${PokedexSearch[i - 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            </div>
+            <div class="pokemon-View-main">
+                <img  id="pokemonImg" src="${PokedexSearch[i]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            </div>
+            <div class="pokemon-View-next">
+                <img onclick="pokemonView(${i + 1}, 'PokedexSearch')"  id="nextPokemon" src="${PokedexSearch[i + 1]['sprites']['other']['official-artwork']['front_shiny']}" alt="">
+            </div>
+            `
+        } 
+    }
+}
+
+function loadImgHTML(i, Array){
+    if(Array != 'PokedexSearch'){
+        return loadIMGbyPokedexHTML(i);
+    }else{
+        return loadIMGbyPokedexSearchHTML(i);
     } 
 }
 

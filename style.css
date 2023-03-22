@@ -126,10 +126,6 @@ h1{
     border-radius: 30px;
 }
 
-.informations img{
-    height: 250px;
-    width: 250px;
-}
 
 .informations{
     display: flex;
@@ -170,25 +166,25 @@ h1{
 }
 
 .pokemon-View-last img{
-    height: 200px ;
-    width: 200px ;
+    height: 150px ;
+    width: 150px ;
     object-fit: cover;
     transition: all 250ms ease-in-out;
 }
 
 .pokemon-View-next img{
-    height: 200px ;
-    width: 200px ;
+    height: 150px ;
+    width: 150px ;
     object-fit: cover !important;
     transition: all 250ms ease-in-out;
 }
 
-.pokemon-View-next:hover{
+.pokemon-View-next img:hover{
     cursor: pointer;
     scale: 1.2;
 }
 
-.pokemon-View-last:hover{
+.pokemon-View-last img:hover{
     cursor: pointer;
     scale: 1.1;
 }
@@ -210,6 +206,16 @@ h1{
 .button-search:hover{
     cursor: pointer;
     background-color: rgb(230, 229, 229);
+}
+
+.X-button{
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    left: auto;
+    right: auto;
+    top: 20px;
+    display: none;
 }
 
 @media (max-width: 775px){
@@ -243,15 +249,43 @@ h1{
         max-width: 150px;
     }
 
-    
+    .X-button{
+        top: 70px;
+        display: block;
+    }
 }
 
-@media (max-width: 435px){
+@media (max-width: 445px){
     .button-search{
         max-width: 60px;
     }
     .input-div input{
         max-width: 110px;
+    }
+}
+
+@media (max-width: 445px){
+
+    .informations{
+        margin-top: -155px;
+    }
+
+    .pokemon-View-main img{
+        width: 150px ;
+        height: 150px ;
+    }
+
+    .details div{
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    .pokemon-view{
+        width: 320px;
+        height: 500px;
+    }
+    .input-div input{
+        max-width: 100px;
     }
 }
 
@@ -263,7 +297,7 @@ h1{
 
     .pokemon-view{
         width: 300px;
-        height: 450px;
+        height: 500px;
     }
     .input-div input{
         max-width: 100px;
