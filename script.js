@@ -193,6 +193,7 @@ async function find() {
             PokedexSearch = [];
         if(input != ''){
             results = all_pokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input.toLowerCase()));
+            document.getElementById('allPokemon').innerHTML = '';
             await loadPokemonSearchDetails();
             await hovereffectForSearch();
             idForSearch = [];
