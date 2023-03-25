@@ -33,8 +33,9 @@ function loadPokemonSearch() {
         all_pokemon = (await (await fetch(url)).json()).results;
     }  
 }
-
+let isLoadingForMorePokemons = false;
 async function loadPokemonSearchDetails(){
+    isLoadingForMorePokemons = true;
     let content = document.getElementById('allPokemon');
     content.innerHTML = '';
     let input = document.getElementById('search').value;
@@ -51,6 +52,7 @@ async function loadPokemonSearchDetails(){
             }
          }
     }
+    isLoadingForMorePokemons = false;
 }
 
 async function firstPokemon() {
@@ -70,21 +72,24 @@ async function firstPokemon() {
 }
 
 async function load20Pokemons() {
-    let firstAmount = pokedex.length + 1;
-    let lastAmount = pokedex.length + 21;
-    for (let i = firstAmount; i < lastAmount; i++) {
-        if (pokedex.length == 1010) {
-            console.log('all')
-        } else {
-            let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-            let response = await fetch(url);
-            currentAsJson = await response.json();
-            pokedex.push(currentAsJson);
-            let id = pokedex[i - 1]['id'];
-            await renderPokemon(i - 1, pokedex, id);
+    if(!isLoadingForMorePokemons){
+        let firstAmount = pokedex.length + 1;
+        let lastAmount = pokedex.length + 21;
+        for (let i = firstAmount; i < lastAmount; i++) {
+            if (pokedex.length == 1010) {
+                console.log('all')
+            } else {
+                let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+                let response = await fetch(url);
+                currentAsJson = await response.json();
+                pokedex.push(currentAsJson);
+                let id = pokedex[i - 1]['id'];
+                await renderPokemon(i - 1, pokedex, id);
+            }
         }
+        hovereffect(firstAmount, lastAmount);
     }
-    hovereffect(firstAmount, lastAmount);
+    
 }
 
 //-----------------------------------------------------//
@@ -198,13 +203,16 @@ async function find() {
             await hovereffectForSearch();
             idForSearch = [];
         }else{
-            let content = document.getElementById('allPokemon');
-            content.innerHTML = '';
-            pokedex = [];
-            PokedexSearch = [];
-            currentAsJsonSearch;
-            idForSearch = [];
-            await init();
+            setTimeout(() => {
+                let content = document.getElementById('allPokemon');
+                content.innerHTML = '';
+                pokedex = [];
+                PokedexSearch = [];
+                currentAsJsonSearch;
+                idForSearch = [];
+                init();
+            }, 250);
+            
         }
         }
         isSearching = false;
