@@ -22,6 +22,8 @@ async function loadSearch(){
     let response = await fetch(url);
     results = await response.json();
     all_pokemon = (await (await fetch(url)).json()).results;
+    isSearching = false;
+    checkInputField()
 }
 
 function loadPokemonSearch() {
@@ -65,8 +67,6 @@ async function firstPokemon() {
         await renderPokemon(i - 1, pokedex, id);
     }
     hovereffect(firstAmount, lastAmount);
-    isSearching = false;
-    checkInputField()
 }
 
 async function load20Pokemons() {
@@ -134,12 +134,11 @@ async function onTheBottom() {
 }
 
 function hovereffect(firstAmount, lastAmount) {
-    for (let i = firstAmount; i < lastAmount - 1; i++) {
+    for (let i = firstAmount; i < lastAmount; i++) {
         document.getElementById(`pokemon${i}`).classList.add('hover-effect');
     }
 }
 function hovereffectForSearch(){
-    
     for(let i = 0; i < idForSearch.length; i++){
         let id = idForSearch[i];
         document.getElementById(`pokemon${id}`).classList.add('hover-effect');
@@ -200,7 +199,11 @@ async function find() {
         }else{
             let content = document.getElementById('allPokemon');
             content.innerHTML = '';
-            await firstPokemon();
+            pokedex = [];
+            PokedexSearch = [];
+            currentAsJsonSearch;
+            idForSearch = [];
+            await init();
         }
         }
         isSearching = false;
