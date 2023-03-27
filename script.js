@@ -7,6 +7,9 @@ let results;
 let PokedexSearch = [];
 let currentAsJsonSearch;
 let idForSearch = [];
+let SearchingForEffect = false;
+let isSearching = false;
+let isLoadingForMorePokemons = false;
 
 async function init() {
     await firstPokemon();
@@ -33,7 +36,7 @@ function loadPokemonSearch() {
         all_pokemon = (await (await fetch(url)).json()).results;
     }  
 }
-let isLoadingForMorePokemons = false;
+
 async function loadPokemonSearchDetails(){
     isLoadingForMorePokemons = true;
     let content = document.getElementById('allPokemon');
@@ -52,7 +55,7 @@ async function loadPokemonSearchDetails(){
             }
          }
     }
-    isLoadingForMorePokemons = false;
+    isLoadingForMorePokemons = true;
 }
 
 async function firstPokemon() {
@@ -166,15 +169,12 @@ function getEffect() {
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             entry.target.classList.toggle("show", entry.isIntersecting)
-
         })
     }, {
         threshold: 0.5,
     })
-
     effects.forEach(effect => {
         observer.observe(effect);
-
     })
 }
 
@@ -190,13 +190,26 @@ function checkInputField(){
 //-----------------------------------------------------//
 //------------------- Search Function -----------------//
 //-----------------------------------------------------//
-let SearchingForEffect = false;
-let isSearching = false;
+
+function setTrueForSearching(){
+    SearchingForEffect = true
+    isSearching = true;
+    isLoadingForMorePokemons = true;
+}
+
+function clearForFind(){
+    let content = document.getElementById('allPokemon');
+    content.innerHTML = '';
+    pokedex = [];
+    PokedexSearch = [];
+    currentAsJsonSearch;
+    idForSearch = [];
+}
+
 async function find() {
     if (!isSearching) {
-        SearchingForEffect = true
-        isSearching = true;
-        checkInputField()
+        setTrueForSearching();
+        checkInputField();
         if (results != '') {
             let input = document.getElementById('search').value;
             results;
@@ -212,22 +225,14 @@ async function find() {
                     input.value = '';
                     alert('The Pokemon does not exist.');
                     SearchingForEffect = false;
-                    let content = document.getElementById('allPokemon');
-                    content.innerHTML = '';
-                    pokedex = [];
-                    PokedexSearch = [];
-                    currentAsJsonSearch;
-                    idForSearch = [];
+                    clearForFind();
                     await init();
+                    isLoadingForMorePokemons = false;
                 }
             } else {
                 SearchingForEffect = false;
-                let content = document.getElementById('allPokemon');
-                content.innerHTML = '';
-                pokedex = [];
-                PokedexSearch = [];
-                currentAsJsonSearch;
-                idForSearch = [];
+                isLoadingForMorePokemons = false;
+                clearForFind();
                 await init();
             }
         }
