@@ -72,24 +72,26 @@ async function firstPokemon() {
 }
 
 async function load20Pokemons() {
-    if(!isLoadingForMorePokemons){
-        let firstAmount = pokedex.length + 1;
-        let lastAmount = pokedex.length + 21;
-        for (let i = firstAmount; i < lastAmount; i++) {
-            if (pokedex.length == 1010) {
-                console.log('all')
-            } else {
-                let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-                let response = await fetch(url);
-                currentAsJson = await response.json();
-                pokedex.push(currentAsJson);
-                let id = pokedex[i - 1]['id'];
-                await renderPokemon(i - 1, pokedex, id);
+    if(!SearchingForEffect){
+        if(!isLoadingForMorePokemons){
+            let firstAmount = pokedex.length + 1;
+            let lastAmount = pokedex.length + 21;
+            for (let i = firstAmount; i < lastAmount; i++) {
+                if (pokedex.length == 1010) {
+                    console.log('all')
+                } else {
+                    let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+                    let response = await fetch(url);
+                    currentAsJson = await response.json();
+                    pokedex.push(currentAsJson);
+                    let id = pokedex[i - 1]['id'];
+                    await renderPokemon(i - 1, pokedex, id);
+                }
             }
+            hovereffect(firstAmount, lastAmount);
         }
-        hovereffect(firstAmount, lastAmount);
+        
     }
-    
 }
 
 //-----------------------------------------------------//
@@ -114,6 +116,7 @@ function renderPokemon(i,Array,id) {
     `;
     }
     getEffect()
+    
 }
 
 function pokemonView(i, Array) {
@@ -131,7 +134,7 @@ function pokemonView(i, Array) {
 
 async function onTheBottom() {
     let obj = document.getElementById('allPokemon');
-    if (obj.scrollTop === (obj.scrollHeight - obj.offsetHeight) && !isLoading) {
+    if (obj.scrollTop === (obj.scrollHeight - obj.offsetHeight) && !isLoading && !isLoadingForMorePokemons) {
         isLoading = true;
         await load20Pokemons()
         isLoading = false;
@@ -187,37 +190,50 @@ function checkInputField(){
 //-----------------------------------------------------//
 //------------------- Search Function -----------------//
 //-----------------------------------------------------//
+let SearchingForEffect = false;
 let isSearching = false;
 async function find() {
-    if(!isSearching){
+    if (!isSearching) {
+        SearchingForEffect = true
         isSearching = true;
         checkInputField()
-        if(results != ''){
+        if (results != '') {
             let input = document.getElementById('search').value;
             results;
             PokedexSearch = [];
-        if(input != ''){
-            results = all_pokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input.toLowerCase()));
-            document.getElementById('allPokemon').innerHTML = '';
-            await loadPokemonSearchDetails();
-            await hovereffectForSearch();
-            idForSearch = [];
-        }else{
-            setTimeout(() => {
+            if (input != '') {
+                results = all_pokemon.filter(pokemon => pokemon.name.toLowerCase().includes(input.toLowerCase()));
+                document.getElementById('allPokemon').innerHTML = '';
+                await loadPokemonSearchDetails();
+                await hovereffectForSearch();
+                idForSearch = [];
+                if(PokedexSearch.length == 0){
+                    let input = document.getElementById('search');
+                    input.value = '';
+                    alert('The Pokemon does not exist.');
+                    SearchingForEffect = false;
+                    let content = document.getElementById('allPokemon');
+                    content.innerHTML = '';
+                    pokedex = [];
+                    PokedexSearch = [];
+                    currentAsJsonSearch;
+                    idForSearch = [];
+                    await init();
+                }
+            } else {
+                SearchingForEffect = false;
                 let content = document.getElementById('allPokemon');
                 content.innerHTML = '';
                 pokedex = [];
                 PokedexSearch = [];
                 currentAsJsonSearch;
                 idForSearch = [];
-                init();
-            }, 250);
-            
-        }
+                await init();
+            }
         }
         isSearching = false;
         checkInputField();
-    }    
+    }
 }
 
 //-----------------------------------------------------//
