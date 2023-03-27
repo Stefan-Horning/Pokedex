@@ -332,68 +332,57 @@ function loadImgHTML(i, Array){
     } 
 }
 
+function DetailsHTML(i,name,type,height,weight,hp, attack,defense){
+    return /*html*/ `
+    <div>
+        <span>Name:</span>
+        <span>${name}</span>
+    </div>
+    <div>
+        <span>Type:</span>
+        <span>${type}</span>
+    </div>
+    <div>
+        <span>height:</span>
+        <span>${height} M</span>
+    </div>
+    <div>
+        <span>weight</span>
+        <span>${weight} Kg</span>
+    </div>
+    <div>
+        <span>Hp:</span>
+        <span>${hp} Hp</span>
+    </div>
+    <div>
+        <span>attack:</span>
+        <span>${attack} At</span>
+    </div>
+    <div>
+        <span>defense:</span>
+        <span>${defense} De</span>
+    </div>
+`;
+}
+
 function pokemonViewHTML(i, Array) {
     if(Array == 'pokedex'){
-        return /*html*/ `
-    <div>
-        <span>Name:</span>
-        <span>${pokedex[i]['name']}</span>
-    </div>
-    <div>
-        <span>Type:</span>
-        <span>${pokedex[i]['types'][0]['type']['name']}</span>
-    </div>
-    <div>
-        <span>height:</span>
-        <span>${pokedex[i]['height'] / 10} M</span>
-    </div>
-    <div>
-        <span>weight</span>
-        <span>${pokedex[i]['weight'] / 10} Kg</span>
-    </div>
-    <div>
-        <span>Hp:</span>
-        <span>${pokedex[i]['stats'][0]['base_stat']} Hp</span>
-    </div>
-    <div>
-        <span>attack:</span>
-        <span>${pokedex[i]['stats'][1]['base_stat']} At</span>
-    </div>
-    <div>
-        <span>defense:</span>
-        <span>${pokedex[i]['stats'][2]['base_stat']} De</span>
-    </div>
-`;
+        let name = pokedex[i]['name'];
+        let type = pokedex[i]['types'][0]['type']['name'];
+        let height = pokedex[i]['height'] / 10;
+        let weight = pokedex[i]['weight'] / 10;
+        let hp = pokedex[i]['stats'][0]['base_stat'];
+        let attack = pokedex[i]['stats'][1]['base_stat'];
+        let defense = pokedex[i]['stats'][2]['base_stat'];
+        return DetailsHTML(i,name,type,height,weight,hp, attack,defense);
     }else{
-        return /*html*/ `
-    <div>
-        <span>Name:</span>
-        <span>${PokedexSearch[i]['name']}</span>
-    </div>
-    <div>
-        <span>Type:</span>
-        <span>${PokedexSearch[i]['types'][0]['type']['name']}</span>
-    </div>
-    <div>
-        <span>height:</span>
-        <span>${PokedexSearch[i]['height'] / 10} M</span>
-    </div>
-    <div>
-        <span>weight</span>
-        <span>${PokedexSearch[i]['weight'] / 10} Kg</span>
-    </div>
-    <div>
-        <span>Hp:</span>
-        <span>${PokedexSearch[i]['stats'][0]['base_stat']} Hp</span>
-    </div>
-    <div>
-        <span>attack:</span>
-        <span>${PokedexSearch[i]['stats'][1]['base_stat']} At</span>
-    </div>
-    <div>
-        <span>defense:</span>
-        <span>${PokedexSearch[i]['stats'][2]['base_stat']} De</span>
-    </div>
-`;
+        let name = PokedexSearch[i]['name'];
+        let type = PokedexSearch[i]['types'][0]['type']['name'];
+        let height = PokedexSearch[i]['height'] / 10;
+        let weight = PokedexSearch[i]['weight'] / 10;
+        let hp = PokedexSearch[i]['stats'][0]['base_stat'];
+        let attack = PokedexSearch[i]['stats'][1]['base_stat'];
+        let defense = PokedexSearch[i]['stats'][2]['base_stat'];
+        return DetailsHTML(i,name,type,height,weight,hp, attack,defense);
     } 
 }
